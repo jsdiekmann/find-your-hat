@@ -5,17 +5,56 @@ const hole = 'O';
 const fieldCharacter = '░';
 const pathCharacter = '*';
 const currentPosition = '$';
+let possibleSpaces = [hole, fieldCharacter, fieldCharacter];
 
 
 class Field {
     constructor(field) {
         this.field = field;
-        this.rowPosition = 0;
-        this.columnPosition = 0;
+        this.rowPosition = field.rowPosition ?? 0;
+        this.columnPosition = field.columnPosition ?? 0;
         this.name = '';
         this.finished = false;
     }
 
+
+    // Generates a random game board based on height and width inputs from the user
+    static generateField(height, width) {
+    
+        let newField = [];
+        
+        for(let i  = 0; i < height; i++) {
+            newField.push([]);
+            for(let j = 0; j < width; j++) {
+                const index = possibleSpaces[Math.floor(Math.random() * possibleSpaces.length)]
+                newField[i].push(index);
+            }
+        }
+        
+        newField[Math.floor(Math.random() * height)][Math.floor(Math.random() * width)] = hat;
+        
+        this.rowPosition = Math.floor(Math.random() * height);
+        this.columnPosition = Math.floor(Math.random() * width);
+        console.log(this.rowPosition, this.columnPosition);
+        newField[this.rowPosition][this.columnPosition] = currentPosition;
+        return newField;
+    }
+
+/*     static checkField(field) {
+        if(field.includes(hat)) {
+        for(let i = 0; i < height; i++) {
+            for(let j = 0; j < width; j++) {
+                if(field[i][j] == fieldCharacter || field[0][0]) {
+                    if(field[i-1][j] != fieldCharacter || field[i-1][j] != hat || field[i+1][j] != fieldCharacter || field[i+1][j] != hat || field[i][j-1] != fieldCharacter || field[i][j-1] != hat || field[i][j+1] != fieldCharacter || field[i][j+1] != hat) {
+                        return false;
+                    }
+                }
+            }
+        }
+    } else {
+        return false;
+    }
+ }*/
     getName() {
         this.name = prompt("What is your name? ");
         return this.name;
@@ -90,6 +129,7 @@ class Field {
     }
  
     print() {
+        console.clear();
         let board = ''
         for(let i=0; i<this.field.length; i++) {
             board = board.concat(this.field[i].join(''),'\n');
@@ -106,12 +146,13 @@ class Field {
     }
 
 }
-const myField = new Field([
-    [currentPosition, fieldCharacter, fieldCharacter, hole],
-    [fieldCharacter, hat, fieldCharacter, hole],
-    [hole, hole, fieldCharacter, fieldCharacter]
-]);
 
+const height = prompt("How many rows do you want your board to have? ");
+const width = prompt("How many columns do you want your board to have? ");
+let newField = Field.generateField(height, width);
+
+const myField = new Field(newField);
+    console.log(myField.rowPosition, myField.columnPosition)
     const name = myField.getName();
     console.log(`Hi there, ${name}! Looks like your haircut game is pretty wack, let's find you a hat to cover that up!`);
     console.log(myField.print());
