@@ -215,11 +215,12 @@ while (!validBoard) {
 
 const myField = new Field(newField);
 const name = myField.getName();
-console.log(
-  `Hi there, ${name}! Looks like your haircut game is pretty wack, let's find you a hat to cover that up!`
-);
 
 console.log(myField.print());
+console.log(
+  `Hi there, ${name}! Looks like your haircut game is pretty wack, let's find you a hat ("^") to cover that up! Make sure you don't fall in any holes ("O") while you search!
+  `
+);
 const playGame = () => {
   let move = myField.getMove();
   while(!moves.includes(move.toLowerCase())) {
