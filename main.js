@@ -202,7 +202,10 @@ let height = prompt("How many rows do you want your board to have? ");
 while(height.includes(height.match(/[a-z]/i))) {
   height = prompt("You must enter a number. How many rows do you want your board to have? ");
 }
-const width = prompt("How many columns do you want your board to have? ");
+let width = prompt("How many columns do you want your board to have? ");
+while(width.includes(width.match(/[a-z]/i))) {
+  width = prompt("You must enter a number. How many columnds do you want your board to have? ");
+}
 let newField = Field.generateField(height, width);
 let validBoard = Field.checkField(newField.board, newField.start);
 while (!validBoard) {
