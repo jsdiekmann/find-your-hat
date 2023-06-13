@@ -6,6 +6,7 @@ const fieldCharacter = "░";
 const pathCharacter = "*";
 const currentPosition = "$";
 let possibleSpaces = [hole, fieldCharacter, fieldCharacter];
+const moves = ['u', 'd', 'l', 'r']
 
 class Field {
   constructor(field) {
@@ -17,7 +18,6 @@ class Field {
   }
 
   // Generates a random game board based on height and width inputs from the user
-
   static generateField(height, width) {
     let newField = {
       board: [],
@@ -37,6 +37,7 @@ class Field {
       Math.floor(Math.random() * width)
     ] = hat;
 
+    // Sets a random starting position
     this.rowPosition = Math.floor(Math.random() * height);
     this.columnPosition = Math.floor(Math.random() * width);
 
@@ -116,7 +117,7 @@ class Field {
   }
 
   getMove() {
-    const positionInput = prompt("Which direction do you want to go? ");
+    const positionInput = prompt("Which direction do you want to go? (R = Right, L = Left, U = Up, D = Down): ");
     return positionInput;
   }
 
@@ -197,7 +198,10 @@ class Field {
   }
 }
 
-const height = prompt("How many rows do you want your board to have? ");
+let height = prompt("How many rows do you want your board to have? ");
+while(height.includes(height.match(/[a-z]/i))) {
+  height = prompt("You must enter a number. How many rows do you want your board to have? ");
+}
 const width = prompt("How many columns do you want your board to have? ");
 let newField = Field.generateField(height, width);
 let validBoard = Field.checkField(newField.board, newField.start);
@@ -207,7 +211,6 @@ while (!validBoard) {
 }
 
 const myField = new Field(newField);
-console.log(myField);
 const name = myField.getName();
 console.log(
   `Hi there, ${name}! Looks like your haircut game is pretty wack, let's find you a hat to cover that up!`
@@ -215,10 +218,15 @@ console.log(
 
 console.log(myField.print());
 const playGame = () => {
-  const move = myField.getMove();
+  let move = myField.getMove();
+  while(!moves.includes(move.toLowerCase())) {
+    console.log(myField.print());
+    console.log("That is not a valid move, please enter another move.")
+    move = myField.getMove();
+  }
   const allowed = myField.moveAllowed(move);
   const makeMove = myField.makeMove(move, allowed);
-  console.log(myField.print().toString());
+  console.log(myField.print());
   if (allowed == false) {
     console.log(
       "That move will take you outside the board, please make another selection!\n"
