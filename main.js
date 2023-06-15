@@ -19,6 +19,7 @@ class Field {
 
   // Generates a random game board based on height and width inputs from the user
   static generateField(height, width) {
+    
     let newField = {
       board: [],
       start: [0, 0],
@@ -199,11 +200,11 @@ class Field {
 }
 
 let height = prompt("How many rows do you want your board to have? ");
-while(height.includes(height.match(/[a-z]/i))) {
+while(height.includes(height.match(/\D/g))) {
   height = prompt("You must enter a number. How many rows do you want your board to have? ");
 }
 let width = prompt("How many columns do you want your board to have? ");
-while(width.includes(width.match(/[a-z]/i))) {
+while(width.includes(width.match(/\D/g))) {
   width = prompt("You must enter a number. How many columnds do you want your board to have? ");
 }
 let newField = Field.generateField(height, width);
@@ -225,7 +226,7 @@ const playGame = () => {
   let move = myField.getMove();
   while(!moves.includes(move.toLowerCase())) {
     console.log(myField.print());
-    console.log("That is not a valid move, please enter another move.")
+    console.log("That is not a valid move, please enter another move.\n")
     move = myField.getMove();
   }
   const allowed = myField.moveAllowed(move);
