@@ -112,6 +112,7 @@ class Field {
     return valid;
   }
 
+  
   getName() {
     this.name = prompt("What is your name? ");
     return this.name;
@@ -122,6 +123,7 @@ class Field {
     return positionInput;
   }
 
+  // Verifies if the user inputted move is valid
   moveAllowed(positionInput) {
     let moveAllowed;
 
@@ -144,6 +146,7 @@ class Field {
     return moveAllowed;
   }
 
+  // Executes the valid user provided move
   makeMove(positionInput, moveAllowed) {
     let exitStatement = null;
 
@@ -199,6 +202,8 @@ class Field {
   }
 }
 
+
+// Game Setup
 let height = prompt("How many rows do you want your board to have? ");
 while(height.includes(height.match(/\D/g))) {
   height = prompt("You must enter a number. How many rows do you want your board to have? ");
@@ -222,6 +227,8 @@ console.log(
   `Hi there, ${name}! Looks like your haircut game is pretty wack, let's find you a hat ("^") to cover that up! Make sure you don't fall in any holes ("O") while you search!
   `
 );
+
+// Gameplay
 const playGame = () => {
   let move = myField.getMove();
   while(!moves.includes(move.toLowerCase())) {
